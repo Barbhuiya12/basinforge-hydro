@@ -5,7 +5,7 @@
 [![Python tests](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/tests.yml/badge.svg)](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/tests.yml)
 [![Study site](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/pages.yml/badge.svg)](https://barbhuiya12.github.io/basinforge-hydro/)
 
-[Study & documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Model explorer](https://barbhuiya12.github.io/basinforge-hydro/#models) · [Measured results](https://barbhuiya12.github.io/basinforge-hydro/study.html) · [Source credits](THIRD_PARTY.md)
+[Study & documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Model reference](https://barbhuiya12.github.io/basinforge-hydro/models/index.html) · [Measured results](https://barbhuiya12.github.io/basinforge-hydro/study.html) · [Source credits](THIRD_PARTY.md)
 
 Version 0.2.0 integrates **14 Python models and all 47 optional MARRMoT structures**, with one simulation/calibration interface. Single-basin, process-parallel multi-basin, shared-parameter fitting, chronological validation, multi-start calibration, scenario ensembles and local HTML reports are included. These are 61 selectable implementations/structures, **not 61 distinct original model families or every model ever published**. See the broader [model research inventory](docs/MODEL_CATALOG.md) and [source attribution](THIRD_PARTY.md).
 
@@ -193,4 +193,4 @@ uv pip install --python .venv/bin/python -e '.[docs]'
 .venv/bin/python -m http.server 8000 --directory _site
 ```
 
-Open `http://localhost:8000`. The model explorer is generated from the package registry, and the study table from the documented verification results. Existing build directories are refused; use a new `--output` directory when rebuilding. GitHub Actions deploys the site from `main` through GitHub Pages.
+Open `http://localhost:8000`. The site uses Material for MkDocs, with sidebar navigation, full-text search, a page table of contents, examples and a separate reference page for every registered model. Model parameters and API signatures are generated from the package, while study results and source credits come from maintained Markdown. Existing build directories are refused; use a new `--output` directory when rebuilding. GitHub Actions deploys the site from `main` through GitHub Pages.

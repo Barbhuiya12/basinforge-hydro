@@ -33,6 +33,8 @@ The original 0.1.0 run had 24 passing tests. The 0.2.0 suite additionally provid
 
 Final development run: **145 tests passed in 44.22 seconds**, with the optional Octave integration enabled. This is one macOS ARM64/Python 3.14.3/Octave 10.3.0 environment; Linux CI workflows are supplied but have not been run remotely. Cross-platform and cross-solver-version results are not certified by this local run.
 
+Publishing checks subsequently passed 146 tests locally, including the site builder; GitHub's Python 3.11/3.13/3.14 jobs passed. The first Linux Octave run found one cross-runtime regression difference in MARRMOT_33, up to 2.96e-5 mm on the controlled fixture, rather than an interface failure. Its stored-reference comparison now uses an explicitly documented 1e-4 mm absolute envelope; the other 46 structures retain 1e-8 mm absolute / 1e-7 relative tolerances. Public discharge validation is unchanged: materially negative flows are rejected. The stored reference is not an exact floating-point oracle across all BLAS/Octave versions.
+
 `python -m build` generates a wheel/source archive including model MATLAB sources, the parameter manifest, worker wrapper and retained licenses. Not published to PyPI. No independent equivalence to airGR or the original HBV-light executable is claimed.
 
 ## Optional MARRMoT verification

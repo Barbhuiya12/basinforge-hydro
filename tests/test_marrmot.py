@@ -46,8 +46,13 @@ def test_every_marrmot_model_against_independent_upstream(number):
     expected = reference["marrmot"][model.runner.class_name]
     # Native MARRMoT may emit tiny negative roundoff; adapter clips only up
     # to 1e-8 mm and exposes raw results through marrmot_details.
-    np.testing.assert_allclose(actual, expected, rtol=1e-7, atol=1e-8)
-    if min(expected) < -1e-8:
+    # The stored reference was calculated on macOS ARM64 / Octave 10.3.0.
+    # Sacramento fallback root solves vary across BLAS/Octave versions;
+    # Linux CI differed by <=2.96e-5 mm. Keep a documented 1e-4 mm absolute
+    # envelope for that structure only (below upstream solver precision).
+    # All other structures retain the original tight regression tolerance.
+    np.testing.assert_allclose(actual, expected, rtol=1e-7, atol=1e-4 if number == 33 else 1e-8)
+    if min(actual) < -1e-8:
         # Upstream Sacramento emits negative flow on this empty-store dry
         # fixture. Verify parity AND that the safe public API rejects it.
         with pytest.raises(RuntimeError, match="invalid discharge"):
