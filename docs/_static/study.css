@@ -7,4 +7,7 @@
 @media (max-width: 768px) {
   .wy-nav-content { padding: 1.5em; }
   .rst-content .highlight, .rst-content .math { overflow-x: auto; }
+  .rst-content dl.field-list { display: block; }
+  .rst-content dl.field-list > dt { float: none; padding-left: 0; }
+  .rst-content dl.field-list > dd { margin-left: 0; min-width: 0; }
 }
