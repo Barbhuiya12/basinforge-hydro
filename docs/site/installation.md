@@ -2,7 +2,14 @@
 
 ## Python package
 
-Python 3.11 or later is required. Install from the source repository:
+Python 3.11 or later is required. Install the version 0.1.0 wheel with pip:
+
+```bash
+python -m pip install https://github.com/Barbhuiya12/basinforge-hydro/releases/download/v0.1.0/basinforge_hydro-0.1.0-py3-none-any.whl
+basinforge doctor
+```
+
+For an editable installation and the example scripts, install from the repository:
 
 ```bash
 git clone https://github.com/Barbhuiya12/basinforge-hydro.git
@@ -14,7 +21,7 @@ basinforge doctor
 basinforge models
 ```
 
-On Windows, replace activation with `.venv\Scripts\activate`. BasinForge has not been published to PyPI; `pip install basinforge-hydro` is not currently the supported installation method.
+On Windows, replace activation with `.venv\Scripts\activate`. The wheel is distributed through GitHub Releases. Use the wheel URL above or the source installation.
 
 The Python install supplies the 14 Python model implementations without installing LuMod or SMARTpy as runtime packages. First calls to Numba-backed kernels may be slower while compiling. Optional independent upstream parity tests use `python -m pip install -e '.[dev,reference]'`.
 

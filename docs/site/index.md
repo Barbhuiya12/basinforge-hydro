@@ -33,7 +33,7 @@ python -m pip install -e .
 basinforge models
 ```
 
-Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. The package is not yet published to PyPI. See [Installation](installation.md) for Octave and development setup.
+Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. See [Installation](installation.md) for the version 0.1.0 pip wheel, Octave and development setup.
 
 ## Basic example
 
@@ -55,7 +55,7 @@ q_mm = get_model("GR4J").simulate(basin, fit.parameters)
 fit.export("results/my-basin")
 ```
 
-The file and basin area above illustrate the API; supply your actual records and metadata. [Input data](data.md) explains the CSV schema. [Real-record examples](examples.md) use observed catchment records bundled with LuMod.
+The file and basin area above illustrate the API; supply your catchment data and metadata. [Input data](data.md) explains the CSV schema. The [LuMod case study](case-study.md) shows calibration, validation hydrographs and sensitivity analyses on three example catchments.
 
 ## Where to start
 

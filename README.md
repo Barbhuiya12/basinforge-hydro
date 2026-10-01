@@ -7,7 +7,7 @@
 
 [Study & documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Model reference](https://barbhuiya12.github.io/basinforge-hydro/models/index.html) · [Measured results](https://barbhuiya12.github.io/basinforge-hydro/study.html) · [Source credits](THIRD_PARTY.md)
 
-Version 0.2.0 integrates **14 Python models and all 47 optional MARRMoT structures**, with one simulation/calibration interface. Single-basin, process-parallel multi-basin, shared-parameter fitting, chronological validation, multi-start calibration, scenario ensembles and local HTML reports are included. These are 61 selectable implementations/structures, **not 61 distinct original model families or every model ever published**. See the broader [model research inventory](docs/MODEL_CATALOG.md) and [source attribution](THIRD_PARTY.md).
+Version 0.1.0 integrates **14 Python models and all 47 optional MARRMoT structures**, with one simulation/calibration interface. Single-basin, process-parallel multi-basin, shared-parameter fitting, chronological validation, multi-start calibration, scenario ensembles and local HTML reports are included. These are 61 selectable implementations/structures, **not 61 distinct original model families or every model ever published**. See the broader [model research inventory](docs/MODEL_CATALOG.md) and [source attribution](THIRD_PARTY.md).
 
 ## Install
 
@@ -19,7 +19,13 @@ uv pip install --python .venv/bin/python -e '.[dev]'
 
 Python ≥3.11. The first run of a Numba-backed model can take longer while BasinForge's bundled numerical kernels compile. LuMod and SMARTpy are optional reference packages; they are not required to run the Python models.
 
-For a fresh checkout, first run `git clone https://github.com/Barbhuiya12/basinforge-hydro.git` and `cd basinforge-hydro`. This package is not yet published to PyPI.
+For a fresh checkout, first run `git clone https://github.com/Barbhuiya12/basinforge-hydro.git` and `cd basinforge-hydro`. To install the version 0.1.0 wheel directly:
+
+```bash
+python -m pip install https://github.com/Barbhuiya12/basinforge-hydro/releases/download/v0.1.0/basinforge_hydro-0.1.0-py3-none-any.whl
+```
+
+Version 0.1.0 includes a [LuMod case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) comparing differential evolution, Latin-hypercube search and multi-start calibration, with observed/simulated hydrographs and Morris/Sobol sensitivity.
 
 ## Runnable models
 
@@ -181,7 +187,7 @@ Create a `Model` with `defaults`, `bounds`, `timestep`, `variant`, and `runner(b
 
 Primary sources: [LuMod documentation](https://zaul_ae.gitlab.io/lumod-docs/), [LuMod source](https://gitlab.com/Zaul_AE/lumod), [MARRMoT](https://github.com/wknoben/MARRMoT), [RavenPy model emulators](https://ravenpy.readthedocs.io/en/latest/notebooks/04_Emulating_hydrological_models.html), [hydromad](https://hydromad.github.io/reference/), [INRAE GR models](https://webgr.inrae.fr/eng/tools/hydrological-models), [SuperflexPy](https://superflexpy.readthedocs.io/en/latest/), [SciPy differential evolution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html).
 
-LuMod's model implementations are by **Saul Arciniega Esparza and collaborators**. BasinForge incorporates their numerical kernels with retained attribution and license. LuMod is an optional reference extra for independent parity tests and the upstream real-record examples; it is not a runtime requirement. BasinForge is not affiliated with or an official successor to LuMod. GPL-3.0-only; see [LICENSE](LICENSE). Model sources and their scientific references must be credited in research.
+LuMod's model implementations are by **Saul Arciniega Esparza and collaborators**. BasinForge incorporates their numerical kernels with retained attribution and license. LuMod is an optional reference extra for independent parity tests and the case-study datasets; it is not a runtime requirement. BasinForge is not affiliated with or an official successor to LuMod. GPL-3.0-only; see [LICENSE](LICENSE). Model sources and their scientific references must be credited in research.
 
 Additional upstream projects: [hydromodel](https://github.com/OuyangWenyu/hydromodel), [SMARTpy](https://github.com/ThibHlln/smartpy), and [ABCD equations](https://abcd.walkerenvres.com/theory.html). Exact pinned revisions, retained licenses and modifications are in [THIRD_PARTY.md](THIRD_PARTY.md). Research-only families are explicitly separated from runnable adapters.
 

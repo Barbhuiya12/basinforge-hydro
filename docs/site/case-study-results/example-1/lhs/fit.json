@@ -1,0 +1,128 @@
+{
+  "basin_id": "lumod-example-1",
+  "model": "GR4J",
+  "variant": "LuMod 0.1.3.0 GR4J",
+  "parameters": {
+    "ps0": 1,
+    "rs0": 0.5,
+    "x1": 107.57516320587558,
+    "x2": 3.1954117685519794,
+    "x3": 50.93456152129645,
+    "x4": 3.7064674921085334
+  },
+  "objective_loss": 0.8416702865900687,
+  "calibration_metrics": {
+    "nse": 0.1583297134099313,
+    "kge": 0.23399409559816253,
+    "rmse": 1.8070001532340982,
+    "log_nse": 0.340501399581436
+  },
+  "validation_metrics": {
+    "nse": 0.04006244778772383,
+    "kge": 0.3616829300829525,
+    "rmse": 2.568642885913248,
+    "log_nse": 0.4468386849701108
+  },
+  "evaluations": 3000,
+  "elapsed_seconds": 1.6041477079852484,
+  "converged": false,
+  "message": "Latin hypercube sample budget exhausted; no convergence test.",
+  "history": [
+    {
+      "evaluation": 150,
+      "loss": 0.9296892696868728
+    },
+    {
+      "evaluation": 300,
+      "loss": 0.926053447598998
+    },
+    {
+      "evaluation": 450,
+      "loss": 0.8603303649539539
+    },
+    {
+      "evaluation": 600,
+      "loss": 0.8493792639962163
+    },
+    {
+      "evaluation": 750,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 900,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1050,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1200,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1350,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1500,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1650,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1800,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 1950,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2100,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2250,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2400,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2550,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2700,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 2850,
+      "loss": 0.8416702865900687
+    },
+    {
+      "evaluation": 3000,
+      "loss": 0.8416702865900687
+    }
+  ],
+  "fingerprint": "75f4406d155888e4ab5ea882023725a7d4d822a17c0c112fccc61372e8a0a6d3",
+  "config": {
+    "method": "lhs",
+    "objective": "nse",
+    "warmup": 365,
+    "calibration_end": null,
+    "calibration_fraction": 0.7,
+    "validation_start": null,
+    "seed": 42,
+    "maxiter": 100,
+    "popsize": 10,
+    "samples": 3000,
+    "polish": false,
+    "bounds": null,
+    "fixed": {}
+  }
+}

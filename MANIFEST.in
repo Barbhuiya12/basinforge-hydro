@@ -6,4 +6,5 @@ recursive-include tests *.py
 recursive-include tests/fixtures *.json
 include THIRD_PARTY.md
 recursive-include docs *.py *.css
+recursive-include docs/site/case-study-results *.png *.csv *.json *.html
 recursive-include scripts *.py

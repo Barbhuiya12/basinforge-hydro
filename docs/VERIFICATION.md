@@ -1,8 +1,10 @@
-# Development verification
+# Verification study
 
 These checks establish an initial working package, not independent scientific certification.
 
-## Real-record calibration
+See the [LuMod case study](site/case-study.md) for the complete calibration-method comparison, hydrographs and sensitivity results.
+
+## LuMod example calibration
 
 Run: `python examples/real_lumod_basins.py --workers 2 --maxiter 100`.
 Three records distributed with LuMod 0.1.3.0, observed discharge interpreted as m³/s, upstream GR4J PET calculation, first 70% of each record used for training, first 365 daily steps excluded as warmup, remaining 30% used for validation. GR4J, differential evolution, seed 42, population multiplier 6, package search bounds and initial-state defaults. Results are local to this configuration; no observation data were invented.
@@ -17,7 +19,7 @@ All jobs completed without errors. The optimizer reported convergence, which is 
 
 ## Simulation microbenchmark
 
-`python benchmarks/compare_lumod.py`: GR4J, real LuMod example 2 (3,287 daily steps), identical forcing and parameters, parity checked, JIT warmed, 20 repetitions, macOS ARM64, Python 3.14.3.
+`python benchmarks/compare_lumod.py`: GR4J, LuMod example 2 (3,287 daily steps), identical forcing and parameters, parity checked, JIT warmed, 20 repetitions, macOS ARM64, Python 3.14.3.
 
 - LuMod public API median: 0.571 ms.
 - Prepared-array BasinForge adapter median: 0.220 ms.
@@ -29,7 +31,7 @@ The difference is primarily wrapper overhead; equations are the same upstream ke
 
 `python -m pytest -q` covers the Python engines, unit conversions and leap years, forcing continuity, missing-observation handling, deterministic seeds, training/validation isolation, common-vector fitting, serial/process agreement, completed-job resume fingerprints, incompatible model rejection, actual record calibration, CLI/no-overwrite behavior, multi-start selection, scenario quantiles and report fingerprint/HTML escaping. The six added hydromodel kernels are compared to independent pinned upstream checkout outputs. SMART is checked against hourly upstream execution; monthly ABCD against a literal quadratic reference and step-by-step storage conservation.
 
-The original 0.1.0 run had 24 passing tests. The 0.2.0 suite additionally provides optional Octave integration tests. Enable them with `BASINFORGE_TEST_MARRMOT=1`; use `BASINFORGE_OCTAVE` and `BASINFORGE_OCTAVE_PACKAGE_LIST` for a nonstandard installation. Default runs skip optional integration, rather than pretending Octave has been tested.
+The suite provides optional Octave integration tests. Enable them with `BASINFORGE_TEST_MARRMOT=1`; use `BASINFORGE_OCTAVE` and `BASINFORGE_OCTAVE_PACKAGE_LIST` for a nonstandard installation.
 
 Final development run: **145 tests passed in 44.22 seconds**, with the optional Octave integration enabled. This is one macOS ARM64/Python 3.14.3/Octave 10.3.0 environment; Linux CI workflows are supplied but have not been run remotely. Cross-platform and cross-solver-version results are not certified by this local run.
 
@@ -43,7 +45,7 @@ On this development machine, Octave 10.3.0 with optim 1.6.3, statistics 1.7.7 an
 
 All 47 also enter single-parameter, two-candidate calibration on a short wet fixture, including chronological holdout. These are interface checks, not effective full-model calibrations. Additional tests check full-history continuity, diagnostics, spawned multi-basin agreement and request-history-independent fallback solves. Upstream MARRMOT_33 produces roughly −1.6e-6 mm on the dry/empty-store reference fixture: raw parity is checked and the public simulation API is explicitly tested to reject that invalid discharge. It is not silently clipped. Arbitrary forcing/parameter combinations can still fail upstream numerical solvers.
 
-## New-engine real-record smoke comparison
+## Example 2 model comparison
 
 Command: `python examples/compare_real_models.py --models GR4J GR5J HYMOD_CLASSIC XAJ MARRMOT_29 --samples 12 --output results/v0.2-real-comparison`.
 

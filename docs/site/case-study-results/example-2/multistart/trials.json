@@ -1,0 +1,426 @@
+[
+  {
+    "basin_id": "lumod-example-2",
+    "model": "GR4J",
+    "variant": "LuMod 0.1.3.0 GR4J",
+    "parameters": {
+      "ps0": 1,
+      "rs0": 0.5,
+      "x1": 1499.8793401224757,
+      "x2": 4.976140577843825,
+      "x3": 98.27500898172016,
+      "x4": 1.4071855399318416
+    },
+    "objective_loss": 0.27760616429645335,
+    "calibration_metrics": {
+      "nse": 0.7223938357035466,
+      "kge": 0.8096018536787043,
+      "rmse": 3.5720053893761,
+      "log_nse": 0.7129587334138066
+    },
+    "validation_metrics": {
+      "nse": 0.5910002835058925,
+      "kge": 0.7435831353476237,
+      "rmse": 4.563546504753575,
+      "log_nse": 0.5992884629264155
+    },
+    "evaluations": 960,
+    "elapsed_seconds": 0.1643729999777861,
+    "converged": true,
+    "message": "Optimization terminated successfully.",
+    "history": [
+      {
+        "generation": 1,
+        "loss": 0.35149727254302876
+      },
+      {
+        "generation": 2,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 3,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 4,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 5,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 6,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 7,
+        "loss": 0.29002132217244714
+      },
+      {
+        "generation": 8,
+        "loss": 0.2870068820220256
+      },
+      {
+        "generation": 9,
+        "loss": 0.2870068820220256
+      },
+      {
+        "generation": 10,
+        "loss": 0.2847566410898077
+      },
+      {
+        "generation": 11,
+        "loss": 0.2847566410898077
+      },
+      {
+        "generation": 12,
+        "loss": 0.2847287106116465
+      },
+      {
+        "generation": 13,
+        "loss": 0.28166820205766463
+      },
+      {
+        "generation": 14,
+        "loss": 0.2816564934054634
+      },
+      {
+        "generation": 15,
+        "loss": 0.2816564934054634
+      },
+      {
+        "generation": 16,
+        "loss": 0.28130736978477966
+      },
+      {
+        "generation": 17,
+        "loss": 0.2801160582715809
+      },
+      {
+        "generation": 18,
+        "loss": 0.2801160582715809
+      },
+      {
+        "generation": 19,
+        "loss": 0.2788776640734538
+      },
+      {
+        "generation": 20,
+        "loss": 0.27882815916372894
+      },
+      {
+        "generation": 21,
+        "loss": 0.27861210692131166
+      },
+      {
+        "generation": 22,
+        "loss": 0.27760616429645335
+      },
+      {
+        "generation": 23,
+        "loss": 0.27760616429645335
+      }
+    ],
+    "fingerprint": "1cf41c61a5c68fda37ebb4490c0509dc2b0031bf663244b7a18fabcbd076e973",
+    "config": {
+      "method": "de",
+      "objective": "nse",
+      "warmup": 365,
+      "calibration_end": null,
+      "calibration_fraction": 0.7,
+      "validation_start": null,
+      "seed": 42,
+      "maxiter": 100,
+      "popsize": 10,
+      "samples": 3000,
+      "polish": false,
+      "bounds": null,
+      "fixed": {}
+    }
+  },
+  {
+    "basin_id": "lumod-example-2",
+    "model": "GR4J",
+    "variant": "LuMod 0.1.3.0 GR4J",
+    "parameters": {
+      "ps0": 1,
+      "rs0": 0.5,
+      "x1": 1470.5326188152599,
+      "x2": 4.995470026593857,
+      "x3": 101.55400136696969,
+      "x4": 1.4165045488792352
+    },
+    "objective_loss": 0.2784201633413681,
+    "calibration_metrics": {
+      "nse": 0.7215798366586319,
+      "kge": 0.8074761041771698,
+      "rmse": 3.5772384876274956,
+      "log_nse": 0.7083418428393271
+    },
+    "validation_metrics": {
+      "nse": 0.5951682626283574,
+      "kge": 0.7465608305719388,
+      "rmse": 4.540234173657822,
+      "log_nse": 0.6051185635953781
+    },
+    "evaluations": 1080,
+    "elapsed_seconds": 0.18409620801685378,
+    "converged": true,
+    "message": "Optimization terminated successfully.",
+    "history": [
+      {
+        "generation": 1,
+        "loss": 0.5174990766740537
+      },
+      {
+        "generation": 2,
+        "loss": 0.4343951887090587
+      },
+      {
+        "generation": 3,
+        "loss": 0.39758397041980986
+      },
+      {
+        "generation": 4,
+        "loss": 0.3637544804856617
+      },
+      {
+        "generation": 5,
+        "loss": 0.32458933818900193
+      },
+      {
+        "generation": 6,
+        "loss": 0.32458933818900193
+      },
+      {
+        "generation": 7,
+        "loss": 0.30707299844039526
+      },
+      {
+        "generation": 8,
+        "loss": 0.30707299844039526
+      },
+      {
+        "generation": 9,
+        "loss": 0.28862026165723254
+      },
+      {
+        "generation": 10,
+        "loss": 0.28862026165723254
+      },
+      {
+        "generation": 11,
+        "loss": 0.28862026165723254
+      },
+      {
+        "generation": 12,
+        "loss": 0.2865981901359287
+      },
+      {
+        "generation": 13,
+        "loss": 0.28490789084847523
+      },
+      {
+        "generation": 14,
+        "loss": 0.28490789084847523
+      },
+      {
+        "generation": 15,
+        "loss": 0.28490789084847523
+      },
+      {
+        "generation": 16,
+        "loss": 0.28462843637889
+      },
+      {
+        "generation": 17,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 18,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 19,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 20,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 21,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 22,
+        "loss": 0.27969936023567965
+      },
+      {
+        "generation": 23,
+        "loss": 0.2792522753857849
+      },
+      {
+        "generation": 24,
+        "loss": 0.2792522753857849
+      },
+      {
+        "generation": 25,
+        "loss": 0.27842945472420255
+      },
+      {
+        "generation": 26,
+        "loss": 0.2784201633413681
+      }
+    ],
+    "fingerprint": "05105da48f93662830af942d62345cb102a101932fc8fd3ed3ca52bd6ce3205c",
+    "config": {
+      "method": "de",
+      "objective": "nse",
+      "warmup": 365,
+      "calibration_end": null,
+      "calibration_fraction": 0.7,
+      "validation_start": null,
+      "seed": 43,
+      "maxiter": 100,
+      "popsize": 10,
+      "samples": 3000,
+      "polish": false,
+      "bounds": null,
+      "fixed": {}
+    }
+  },
+  {
+    "basin_id": "lumod-example-2",
+    "model": "GR4J",
+    "variant": "LuMod 0.1.3.0 GR4J",
+    "parameters": {
+      "ps0": 1,
+      "rs0": 0.5,
+      "x1": 1477.6175963559176,
+      "x2": 4.987506511872384,
+      "x3": 99.56048881694986,
+      "x4": 1.4405732426108813
+    },
+    "objective_loss": 0.2783895984344653,
+    "calibration_metrics": {
+      "nse": 0.7216104015655347,
+      "kge": 0.8100670107652037,
+      "rmse": 3.577042127994324,
+      "log_nse": 0.7102989133887847
+    },
+    "validation_metrics": {
+      "nse": 0.5917413425639757,
+      "kge": 0.7457168279070818,
+      "rmse": 4.559410327381586,
+      "log_nse": 0.6006970295375307
+    },
+    "evaluations": 880,
+    "elapsed_seconds": 0.1501332920161076,
+    "converged": true,
+    "message": "Optimization terminated successfully.",
+    "history": [
+      {
+        "generation": 1,
+        "loss": 0.4251545547918719
+      },
+      {
+        "generation": 2,
+        "loss": 0.4190700739473796
+      },
+      {
+        "generation": 3,
+        "loss": 0.34938358383096313
+      },
+      {
+        "generation": 4,
+        "loss": 0.29104345025061185
+      },
+      {
+        "generation": 5,
+        "loss": 0.29104345025061185
+      },
+      {
+        "generation": 6,
+        "loss": 0.29104345025061185
+      },
+      {
+        "generation": 7,
+        "loss": 0.2883859067898926
+      },
+      {
+        "generation": 8,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 9,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 10,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 11,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 12,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 13,
+        "loss": 0.2827648477195259
+      },
+      {
+        "generation": 14,
+        "loss": 0.28166891401044625
+      },
+      {
+        "generation": 15,
+        "loss": 0.28166891401044625
+      },
+      {
+        "generation": 16,
+        "loss": 0.28166891401044625
+      },
+      {
+        "generation": 17,
+        "loss": 0.28166891401044625
+      },
+      {
+        "generation": 18,
+        "loss": 0.2808738452945858
+      },
+      {
+        "generation": 19,
+        "loss": 0.28012525517324427
+      },
+      {
+        "generation": 20,
+        "loss": 0.2783895984344653
+      },
+      {
+        "generation": 21,
+        "loss": 0.2783895984344653
+      }
+    ],
+    "fingerprint": "719b2efaf585edd261876778dc960c419e3e2ff0d03db1599b023b587b0be40d",
+    "config": {
+      "method": "de",
+      "objective": "nse",
+      "warmup": 365,
+      "calibration_end": null,
+      "calibration_fraction": 0.7,
+      "validation_start": null,
+      "seed": 44,
+      "maxiter": 100,
+      "popsize": 10,
+      "samples": 3000,
+      "polish": false,
+      "bounds": null,
+      "fixed": {}
+    }
+  }
+]

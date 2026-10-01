@@ -1,8 +1,8 @@
-# Examples with real observations
+# Examples and case studies
 
-These examples use catchment records distributed with LuMod. They do not fabricate discharge observations. Data/implementation provenance and numerical conditions are described in the [verification study](study.md).
+Start with the [LuMod case study](case-study.md), which compares all supported calibration searches on three example catchments, with hydrographs, sensitivity analyses, parameters and downloadable results.
 
-Running BasinForge's Python models does not require LuMod or SMARTpy. Install the optional `reference` extra (`pip install 'basinforge-hydro[reference]'`) only if you want the independent upstream parity tests.
+To reproduce the case study from a checkout, install `pip install -e '.[reference]'` to access the LuMod example datasets and PET routine. The Python model kernels themselves run with BasinForge's core dependencies.
 
 ## Three-basin calibration
 
@@ -52,4 +52,4 @@ Quantiles describe the supplied parameter scenarios. They are not posterior samp
 python benchmarks/compare_lumod.py
 ```
 
-This compares wrapper overhead for warmed GR4J runs on one real record. It does not show a universal speedup or faster Octave fitting. See [the measured workload](study.md).
+This compares wrapper overhead for warmed GR4J runs on LuMod example 2. See [the measured workload](study.md).
