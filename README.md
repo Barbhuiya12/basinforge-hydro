@@ -7,6 +7,10 @@ Lumped hydrological simulation, calibration and sensitivity analysis for single 
 
 [Documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Quick start](https://barbhuiya12.github.io/basinforge-hydro/quickstart.html) · [Case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) · [Release 0.1.0](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.1.0)
 
+![Observed flow and calibrated GR4J simulations from the LuMod example 2 case study](https://raw.githubusercontent.com/Barbhuiya12/basinforge-hydro/main/docs/site/case-study-results/example-2-validation.png)
+
+*First validation year for LuMod example 2: observed flow and fits from differential evolution, Latin-hypercube search and multi-start calibration. [Explore the case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html).*
+
 ## Features
 
 - 14 Python model implementations and 47 optional MARRMoT structures.
@@ -16,7 +20,13 @@ Lumped hydrological simulation, calibration and sensitivity analysis for single 
 - Morris and Sobol sensitivity analysis.
 - Saved parameters, simulations, hydrographs and HTML reports.
 
-The Python models include GR1A, GR2M, GR3J, GR4J, GR5J, GR6J, HYMOD, HYMOD_CLASSIC, HBV, MILC, XAJ, XAJ_MZ, SMART and ABCD. See the [model reference](https://barbhuiya12.github.io/basinforge-hydro/models/index.html) for each implementation's equations, parameters and time step. The optional MARRMoT structures require Octave and its `optim` package.
+| Time step | Python models |
+| --- | --- |
+| Daily | GR3J, GR4J, GR5J, GR6J, HYMOD, HYMOD_CLASSIC, HBV, MILC, XAJ, XAJ_MZ, SMART |
+| Monthly | GR2M, ABCD |
+| Annual | GR1A |
+
+The 47 optional daily MARRMoT structures require Octave and its `optim` package. See the [model reference](https://barbhuiya12.github.io/basinforge-hydro/models/index.html) for equations, parameters and implementation details.
 
 ## Install
 
@@ -34,6 +44,17 @@ git clone https://github.com/Barbhuiya12/basinforge-hydro.git
 cd basinforge-hydro
 python -m pip install -e .
 ```
+
+## Try the example data
+
+From the checkout above, run the three-catchment LuMod case study:
+
+```bash
+python -m pip install -e '.[reference]'
+python examples/lumod_case_study.py --output lumod-case-study
+```
+
+This creates fitted parameters, simulations, hydrographs, sensitivity plots and reports for every supported calibration search. Choose a new output directory.
 
 ## Quick start
 
@@ -62,6 +83,22 @@ print(study["fit"].parameters)
 print(study["fit"].validation_metrics)
 ```
 
+Your results are saved together:
+
+```text
+study-A/
+├── fit/
+│   ├── fit.json
+│   └── simulation.csv
+├── report/
+│   ├── index.html
+│   ├── diagnostics.png
+│   └── summary.json
+└── sensitivity.json
+```
+
+Open `study-A/report/index.html` to inspect the hydrograph, flow-duration curve and calibration/validation scores.
+
 Supply your own CSV and catchment area. Use `date, precipitation, pet, qobs` columns; temperature-dependent models also need `temperature`. Precipitation and PET are mm per model step. Set the observed discharge unit explicitly and choose a warmup appropriate to the model's time step. Output directories must be new.
 
 The same workflow is available from the command line:
@@ -77,15 +114,6 @@ See the [input guide](https://barbhuiya12.github.io/basinforge-hydro/data.html),
 ## LuMod case study
 
 The [case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) compares all supported calibration searches on three LuMod example catchments. It includes calibration and validation scores, observed and simulated hydrographs, Morris/Sobol sensitivity plots, and downloadable parameters and simulations.
-
-To reproduce it from a checkout:
-
-```bash
-python -m pip install -e '.[reference]'
-python examples/lumod_case_study.py --output lumod-case-study
-```
-
-The case-study output directory must be new.
 
 ## License and credits
 
