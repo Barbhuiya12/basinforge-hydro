@@ -2,6 +2,8 @@
 
 These examples use catchment records distributed with LuMod. They do not fabricate discharge observations. Data/implementation provenance and numerical conditions are described in the [verification study](study.md).
 
+Running BasinForge's Python models does not require LuMod or SMARTpy. Install the optional `reference` extra (`pip install 'basinforge-hydro[reference]'`) only if you want the independent upstream parity tests.
+
 ## Three-basin calibration
 
 From the repository root:

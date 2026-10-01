@@ -15,6 +15,8 @@ These are 61 selectable implementations/structures, not 61 distinct original mod
 - Daily, monthly and annual model contracts with explicit units.
 - Independent or shared-parameter multi-basin calibration.
 - Differential evolution, Latin-hypercube sampling and multi-start fitting.
+- Morris screening and Sobol first/total order global sensitivity.
+- One-call calibration, training-only sensitivity and report exports.
 - Chronological training/validation with continuous model history.
 - NSE, KGE (2009), RMSE and explicitly defined log NSE.
 - Saved parameters, simulations, hydrograph/flow-duration reports and scenario ensembles.
@@ -63,6 +65,8 @@ The file and basin area above illustrate the API; supply your actual records and
 | Choose a model | [Models](models/index.md) |
 | Fit a single basin | [Calibration](calibration.md) |
 | Fit several basins | [Multi-basin workflows](multi-basin.md) |
+| Analyze global parameter sensitivity | [Sensitivity guide](calibration.md#sensitivity-analysis) |
+| Review model equations | [Equation reference](equations.md) |
 | Understand the measured results | [Verification study](study.md) |
 | Find function signatures | [API reference](api.md) |
 

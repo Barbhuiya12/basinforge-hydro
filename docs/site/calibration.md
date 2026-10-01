@@ -28,6 +28,19 @@ Alternatively set `calibration_end="2015-12-31"` and optionally `validation_star
 | Differential evolution | `method="de", maxiter=100, popsize=10` | Iterative population search |
 | Latin hypercube | `method="lhs", samples=1000` | Fixed candidate budget; no convergence test |
 
+## Sensitivity analysis
+
+`morris_sensitivity` screens parameters using elementary effects. It reports signed mean effect (`mu`), mean absolute effect (`mu_star`) and effect spread (`sigma`), normalized to each parameter's declared range. `sobol_sensitivity` reports first-order and total-order variance fractions using Jansen estimators. Sobol base sample counts must be powers of two; the model evaluation budget is `samples × (free parameters + 2)`. First-order estimates can be negative from finite sampling.
+
+Both analyses use the configured calibration bounds and score only training observations after warmup. They rerun models with fresh initial states, use independent uniform parameter samples, and do not report posterior or predictive uncertainty. Narrow bounds explicitly if the full supported model range is scientifically inappropriate. More details: [equation definitions](equations.md).
+
+```python
+from basinforge import morris_sensitivity, sobol_sensitivity
+
+morris = morris_sensitivity(basin, "GR4J", config, trajectories=20, seed=42)
+sobol = sobol_sensitivity(basin, "GR4J", config, samples=256, seed=42)
+```
+
 Neither method guarantees a global optimum or a satisfactory fit. SCE-UA, DREAM/MCMC and Pareto optimization are not currently implemented.
 
 ## Objectives
@@ -65,6 +78,25 @@ best = search["best"]
 ```
 
 The minimum **training objective loss** selects the best fit. Validation is not used to choose a seed. Searches across seeds currently run serially.
+
+For fitting, sensitivity analysis and reports in one call, use `run_experiment`:
+
+```python
+from basinforge import run_experiment
+
+study = run_experiment(
+    basin, "GR4J", config,
+    sensitivity="morris",
+    sensitivity_options={"trajectories": 20, "seed": 42},
+    output="results/A-study",
+)
+print(study["fit"].validation_metrics)
+print(study["sensitivity"]["parameters"][:3])
+```
+
+`output` refuses existing paths and publishes fit parameters/simulation, a hydrograph report and `sensitivity.json` together.
+
+The equivalent single-basin CLI is `basinforge experiment basin.csv --area 1200 --q-unit m3/s --model GR4J --warmup 365 --calibration-fraction 0.7 --sensitivity morris --trajectories 20 --output results/A-study`. Choose `--sensitivity sobol --samples 256` for variance-based analysis (`--samples` must be a power of two), or `--sensitivity none` to export only the fit and diagnostics.
 
 ## Command line
 

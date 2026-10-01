@@ -1,3 +1,5 @@
+import builtins
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -15,7 +17,8 @@ def make_basin(model="GR4J", n=80, identifier="fixture", seed=12):
 
 @pytest.mark.parametrize("name", ["GR4J", "HYMOD", "HBV", "MILC", "GR2M", "GR1A"])
 def test_parity_with_lumod_public_api(name):
-    from lumod import models
+    lumod = pytest.importorskip("lumod")
+    models = lumod.models
     basin = make_basin(name)
     fast = get_model(name).simulate(basin)
     frame = pd.DataFrame({"prec": basin.precipitation, "pet": basin.pet, "tmean": basin.temperature}, index=basin.dates)
@@ -35,6 +38,22 @@ def test_models_do_not_mutate_inputs_or_defaults():
     np.testing.assert_array_equal(first, second)
     assert model.defaults == before
     assert not basin.precipitation.flags.writeable
+
+
+def test_python_models_run_without_upstream_runtime_packages(monkeypatch):
+    original_import = builtins.__import__
+
+    def forbid_upstream(name, *args, **kwargs):
+        if name.split(".", 1)[0] in {"lumod", "smartpy"}:
+            raise AssertionError(f"Python model runtime tried to import optional reference package {name}.")
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", forbid_upstream)
+    for item in list_models():
+        basin = make_basin(item["name"], n=40)
+        output = get_model(item["name"]).simulate(basin)
+        assert output.shape == basin.precipitation.shape
+        assert np.all(np.isfinite(output))
 
 
 def test_frequency_and_temperature_validation():

@@ -25,6 +25,4 @@ fit.export("results/A")
 
 Replace the file and area with your own catchment metadata. `calibrate` runs the optimizer and computes training/validation metrics; it does not automatically choose scientifically appropriate data, settings or validation periods.
 
-:::{note}
-Sensitivity analysis and a verified Python-only port of every optional model are ongoing work, not released capabilities. See the [roadmap](roadmap.md).
-:::
+For a complete fit, global sensitivity and report in one Python call, see the one-call [experiment workflow](calibration.md#multi-start-fitting). Sensitivity sampling methods and assumptions are explained in [Calibration and sensitivity](calibration.md#sensitivity-analysis).

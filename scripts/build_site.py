@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import posixpath
 import re
+import re
 import shutil
 import tempfile
 
@@ -29,6 +30,7 @@ def model_data():
         model["stores"] = item["stores"] if item else None
         model["temperature_required"] = item["temperature_required"] if item else model["name"] == "HBV"
         model["structure"] = item["class_name"].split("_")[2] if item else model["name"]
+        model["marrmot_class"] = item["class_name"] if item else None
         if item:
             source = "_vendor/marrmot/" + item["class_name"] + ".m"
         elif model["name"] in {"GR4J", "GR2M", "GR1A", "HYMOD", "HBV", "MILC"}:
@@ -44,6 +46,41 @@ def model_data():
     return models
 
 
+def equation_sources(model):
+    """Attach the exact executable equation code to its generated model page."""
+    package = ROOT / "src/basinforge"
+    if model["backend"] != "octave":
+        name = model["name"]
+        if name in {"GR3J", "GR5J", "GR6J", "HYMOD_CLASSIC", "XAJ", "XAJ_MZ"}:
+            key = "hymod" if name == "HYMOD_CLASSIC" else "xaj" if name.startswith("XAJ") else name.lower()
+            source = package / "_vendor/hydromodel" / f"{key}.py"
+        elif name == "SMART":
+            source = package / "_vendor/smartpy/structure.py"
+        elif name == "ABCD":
+            source = package / "water_balance.py"
+        else:
+            source = package / "_vendor/lumod" / f"{name.lower()}_model.py"
+        return [("python", source.read_text())]
+
+    source = package / "_vendor/marrmot" / f"{model['marrmot_class']}.m"
+    lines = source.read_text().splitlines()
+    start = next(i for i, line in enumerate(lines) if re.match(r"\s*function\s+\[dS,\s*fluxes\]\s*=\s*model_fun\b", line))
+    end = next((i for i in range(start + 1, len(lines)) if re.match(r"\s{8}function\b", lines[i])), len(lines))
+    governing = "\n".join(lines[start:end]).rstrip()
+    names, queue = [], [governing]
+    while queue:
+        block = queue.pop(0)
+        for match in re.finditer(r"\b([A-Za-z][A-Za-z0-9_]*)\s*\(", block):
+            name = match.group(1)
+            helper = package / "_vendor/marrmot" / f"{name}.m"
+            if name not in names and name != "model_fun" and helper.is_file():
+                names.append(name)
+                queue.append(helper.read_text())
+    result = [("matlab", governing)]
+    result.extend(("matlab", (package / "_vendor/marrmot" / f"{name}.m").read_text().rstrip()) for name in names)
+    return result
+
+
 def reference_page(model):
     name = model["name"]
     lines = [f"# {name}", "", "## Implementation", "", model["variant"], "", f"- **Time step:** {model['timestep']}", f"- **Backend:** {model['runtime_requirement']}", f"- **Calibrated parameters:** {len(model['calibrated_parameters'])}", f"- **Temperature required:** {'yes' if model['temperature_required'] else 'no'}", "", f"[Inspect the exact implementation]({model['source']}).", "", "## Parameters and initial configuration", "", "| Parameter | Supported calibration range | Default |", "| --- | --- | ---: |"]
@@ -52,6 +89,9 @@ def reference_page(model):
         interval = f"{bounds[0]} to {bounds[1]}" if bounds else "Fixed initial/configuration value"
         lines.append(f"| `{key}` | {interval} | {value} |")
     lines += ["", "Ranges/defaults are implementation contracts, not universal priors or a recommended basin calibration. Consult source comments for parameter units and coupling.", ""]
+    lines += ["## Governing equations", "", "The following source is the exact model kernel used by this adapter. For MARRMoT it includes the state derivative and each referenced flux function; the solver and routing are described above. Original notices and source citations are retained in the files.", ""]
+    for lexer, source in equation_sources(model):
+        lines += [f"```{lexer}", source, "```", ""]
     if model["backend"] == "octave":
         lines += [":::{note}", "This standardized MARRMoT structure is not identical to the original named model. `p01...` follow exact source order; `s01...` are fixed initial stores, defaulting to zero. Octave + optim are required. Solver behavior can differ across runtime versions.", ":::", ""]
     lines += ["## Simulation", "", "```python", "from basinforge import Basin, get_model", "", f'basin = Basin.from_csv("basin.csv", basin_id="A", area_km2=1200,', f'                       q_unit="m3/s", timestep="{model["timestep"]}")', f'q_mm = get_model("{name}").simulate(basin)', "q_m3s = basin.to_m3s(q_mm)", "```", "", "Supply your actual data and catchment area; temperature-dependent models require a temperature column. For non-daily models, choose an appropriate warmup in model steps.", "", "See [calibration](../calibration.md), [input requirements](../data.md), [sources](../credits.md) and [verification limitations](../study.md).", ""]
@@ -76,7 +116,7 @@ def build(output):
         shutil.copytree(ROOT / "docs/site", source, dirs_exist_ok=True)
         shutil.copy2(ROOT / "docs/conf.py", source / "conf.py")
         shutil.copytree(ROOT / "docs/_static", source / "_static")
-        pages = [("guide", "README.md"), ("research", "docs/MODEL_CATALOG.md"), ("study", "docs/VERIFICATION.md"), ("credits", "THIRD_PARTY.md"), ("roadmap", "docs/ROADMAP.md")]
+        pages = [("guide", "README.md"), ("research", "docs/MODEL_CATALOG.md"), ("study", "docs/VERIFICATION.md"), ("credits", "THIRD_PARTY.md")]
         routes = {original: slug + ".md" for slug, original in pages}
         routes["LICENSE"] = REPOSITORY + "/blob/main/LICENSE"
         for slug, original in pages:
@@ -122,7 +162,7 @@ def build(output):
             entries = [next(iter(item)) for item in group]
             (model_dir / (filename + ".md")).write_text("# " + title + "\n" + toctree(entries))
         with (source / "index.md").open("a") as stream:
-            stream.write(toctree(["quickstart", "models/index", "tutorials", "configuration", "api", "Verification study <study>", "Research inventory <research>", "Development roadmap <roadmap>", "Complete user guide <guide>", "Sources and licenses <credits>"]))
+            stream.write(toctree(["quickstart", "models/index", "equations", "tutorials", "configuration", "api", "Verification study <study>", "Research inventory <research>", "Complete user guide <guide>", "Sources and licenses <credits>"]))
         app = Sphinx(str(source), str(source), str(output), str(source / ".doctrees"), "html", warningiserror=True, freshenv=True)
         app.build(force_all=True)
         if app.statuscode:

@@ -4,7 +4,7 @@ BasinForge is an independent workflow package, not an official successor or affi
 
 ## LuMod
 
-LuMod `0.1.3.0`, Saul Arciniega Esparza and contributors. Six numerical kernels, their defaults and the MILC unit-hydrograph table are incorporated under `src/basinforge/_vendor/lumod`. [Official source](https://gitlab.com/Zaul_AE/lumod) and [documentation](https://zaul_ae.gitlab.io/lumod-docs/). GPL-3.0; the original license and source attribution are retained. Upstream model classes, plotting and PET utilities are not copied. Kernel decorators enable cached Numba compilation; scientific equations are unchanged. The dependency remains for the bundled real-record examples and independent reference tests; complete dependency removal is not finished.
+LuMod `0.1.3.0`, Saul Arciniega Esparza and contributors. Six numerical kernels, their defaults and the MILC unit-hydrograph table are incorporated under `src/basinforge/_vendor/lumod`. [Official source](https://gitlab.com/Zaul_AE/lumod) and [documentation](https://zaul_ae.gitlab.io/lumod-docs/). GPL-3.0; the original license and source attribution are retained. Upstream model classes, plotting and PET utilities are not copied. Kernel decorators enable cached Numba compilation; scientific equations are unchanged. LuMod is not a runtime dependency: install the optional `reference` extra only to run independent parity tests against the upstream package.
 
 ## hydromodel
 
@@ -20,7 +20,7 @@ One compatibility modification in `MARRMoT_model.m`: the `rerunSolver` callback 
 
 ## SMARTpy
 
-SMARTpy `0.2.2`, Thibault Hallouin and contributors, [official hydrological project](https://github.com/ThibHlln/smartpy), GPL v3. Not the similarly named Tezos development tool. The explicit Python catchment/river step functions are incorporated under `src/basinforge/_vendor/smartpy` with cached Numba compilation, original notices and license; scientific equations are unchanged. No optional unversioned C++ acceleration module is used. BasinForge allocates daily P/PET uniformly to 24 hourly substeps. Routing stores start empty, soil stores half-full. This forcing disaggregation is a stated modeling assumption, not observed subdaily weather. The pinned package remains installed for independent reference tests pending packaging cleanup.
+SMARTpy `0.2.2`, Thibault Hallouin and contributors, [official hydrological project](https://github.com/ThibHlln/smartpy), GPL v3. Not the similarly named Tezos development tool. The explicit Python catchment/river step functions are incorporated under `src/basinforge/_vendor/smartpy` with cached Numba compilation, original notices and license; scientific equations are unchanged. No optional unversioned C++ acceleration module is used. BasinForge allocates daily P/PET uniformly to 24 hourly substeps. Routing stores start empty, soil stores half-full. This forcing disaggregation is a stated modeling assumption, not observed subdaily weather. SMARTpy is not a runtime dependency: the optional `reference` extra installs it only for independent parity tests.
 
 ## ABCD
 

@@ -11,7 +11,7 @@ from test_calibration import observed
 
 
 def test_real_lumod_record_calibrates_and_validates():
-    import lumod
+    lumod = pytest.importorskip("lumod")
     info, frame = lumod.load_example(2)
     pet = lumod.models.GR4J(area=float(info.area), lat=float(info.lat)).run(frame).pet
     frame = frame.assign(pet=pet)
@@ -62,6 +62,8 @@ def test_cli_optional_inventory_and_doctor(monkeypatch, capsys):
     assert description["python_adapters"] == 14
     assert description["optional_octave_adapters"] == 47
     assert "marrmot" not in description  # no runtime invocation implied
+    assert "lumod" not in description["packages"]
+    assert "smartpy" not in description["packages"]
 
 
 def test_cli_multistart_with_report(tmp_path, monkeypatch, capsys):
@@ -76,3 +78,19 @@ def test_cli_multistart_with_report(tmp_path, monkeypatch, capsys):
     assert len(trials) == 2
     assert best["objective_loss"] == min(fit["objective_loss"] for fit in trials)
     assert (output / "report" / "index.html").exists()
+
+
+def test_cli_one_call_experiment(tmp_path, monkeypatch, capsys):
+    basin = observed()
+    source = tmp_path / "basin.csv"
+    pd.DataFrame({"date": basin.dates, "precipitation": basin.precipitation, "pet": basin.pet, "qobs": basin.qobs}).to_csv(source, index=False)
+    output = tmp_path / "study"
+    monkeypatch.setattr(sys, "argv", ["basinforge", "experiment", str(source), "--area", "150", "--warmup", "10", "--calibration-fraction", ".7", "--maxiter", "0", "--starts", "2", "--trajectories", "2", "--output", str(output)])
+    main()
+    response = json.loads(capsys.readouterr().out)
+    assert response["model"] == "GR4J"
+    assert (output / "fit/fit.json").exists()
+    assert (output / "multistart.json").exists()
+    assert (output / "report/index.html").exists()
+    assert (output / "sensitivity.json").exists()
+    assert json.loads((output / "sensitivity.json").read_text())["trajectories"] == 2

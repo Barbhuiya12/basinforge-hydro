@@ -25,6 +25,15 @@ def test_site_registry_results_links_and_no_overwrite(tmp_path):
     home = (destination / "index.html").read_text()
     assert "wy-nav-side" in home
     assert "Quick Start" in home and "Tutorials" in home
+    assert "Development roadmap" not in home
+    assert "roadmap" not in home.lower()
+    assert not (destination / "roadmap.html").exists()
+    assert not (destination / "roadmap.md").exists()
+    assert (destination / "equations.html").exists()
+    assert "ABCD monthly water balance" in (destination / "equations.html").read_text()
+    marrmot_01 = (destination / "models/MARRMOT_01.html").read_text()
+    assert "model_fun" in marrmot_01
+    assert "saturation_1</span><span" in marrmot_01
     assert "autofunction" not in (destination / "api.html").read_text()
     assert "py function" in (destination / "api.html").read_text()
     class Links(HTMLParser):

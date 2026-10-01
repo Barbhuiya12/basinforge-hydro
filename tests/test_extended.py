@@ -49,7 +49,8 @@ def test_abcd_equations_and_mass_balance():
 
 
 def test_smart_parity_with_hourly_upstream_run():
-    from smartpy.structure import run_all_steps
+    smartpy = pytest.importorskip("smartpy.structure")
+    run_all_steps = smartpy.run_all_steps
     basin = make_basin("SMART", n=10)
     model = get_model("SMART")
     parameters = np.array([model.defaults[name] for name in ["T", "C", "H", "D", "S", "Z", "SK", "FK", "GK", "RK"]])

@@ -3,7 +3,7 @@ import json
 from dataclasses import replace
 from pathlib import Path
 
-from . import Basin, CalibrationConfig, calibrate, calibrate_many, compare_models, get_model, list_models, configure_marrmot, check_marrmot, calibrate_multistart, export_report
+from . import Basin, CalibrationConfig, calibrate, calibrate_many, compare_models, get_model, list_models, configure_marrmot, check_marrmot, calibrate_multistart, export_report, run_experiment
 from .io import load_basins, summary_frame
 
 
@@ -16,14 +16,14 @@ def main():
     doctor.add_argument("--check-marrmot", action="store_true")
     doctor.add_argument("--octave")
     doctor.add_argument("--octave-package-list")
-    for name in ["run", "calibrate", "batch", "compare"]:
+    for name in ["run", "calibrate", "experiment", "batch", "compare"]:
         child = commands.add_parser(name)
         child.add_argument("input", type=Path, help="Time-series CSV, or basin manifest for batch/compare")
         child.add_argument("--output", type=Path, required=True)
         child.add_argument("--model", default="GR4J")
         child.add_argument("--octave", help="Path to optional octave-cli executable")
         child.add_argument("--octave-package-list", help="Optional Octave local package-list file")
-        if name in {"run", "calibrate"}:
+        if name in {"run", "calibrate", "experiment"}:
             child.add_argument("--basin-id", default="basin")
             child.add_argument("--area", type=float, required=True, help="Area in km²")
             child.add_argument("--latitude", type=float, default=0)
@@ -47,6 +47,11 @@ def main():
         if name == "calibrate":
             child.add_argument("--starts", type=int, default=1, help="Independent seeds; select by training loss")
             child.add_argument("--report", action="store_true", help="Export hydrograph/flow-duration HTML report")
+        if name == "experiment":
+            child.add_argument("--starts", type=int, default=1, help="Independent fits; select by training loss")
+            child.add_argument("--sensitivity", choices=["morris", "sobol", "none"], default="morris")
+            child.add_argument("--trajectories", type=int, default=12, help="Morris trajectory count")
+            child.add_argument("--samples", type=int, default=256, help="Sobol power-of-two base sample count")
     args = parser.parse_args()
     if args.command == "models":
         print(json.dumps(list_models(include_optional=args.all), indent=2))
@@ -55,7 +60,7 @@ def main():
         if args.command == "doctor":
             import platform
             from importlib.metadata import version
-            result = {"python": platform.python_version(), "packages": {name: version(name) for name in ["lumod", "smartpy", "numpy", "pandas", "scipy", "numba"]}, "python_adapters": len(list_models()), "optional_octave_adapters": 47}
+            result = {"python": platform.python_version(), "basinforge": __import__("basinforge").__version__, "packages": {name: version(name) for name in ["numpy", "pandas", "scipy", "numba"]}, "python_adapters": len(list_models()), "optional_octave_adapters": 47}
             if args.check_marrmot:
                 description = check_marrmot(octave=args.octave, package_list=args.octave_package_list)
                 result["marrmot"] = {"status": "all classes instantiated; simulation not checked by doctor", "classes": len(description["models"]), "octave": description["octave_version"]}
@@ -63,7 +68,7 @@ def main():
             return
         if args.octave or args.octave_package_list:
             configure_marrmot(octave=args.octave, package_list=args.octave_package_list)
-        if args.command in {"run", "calibrate"}:
+        if args.command in {"run", "calibrate", "experiment"}:
             basin = Basin.from_csv(args.input, basin_id=args.basin_id, area_km2=args.area, latitude=args.latitude, timestep=args.timestep, q_unit=args.q_unit)
         if args.command == "run":
             import pandas as pd
@@ -78,6 +83,12 @@ def main():
         config = CalibrationConfig(**json.loads(args.config.read_text())) if args.config else CalibrationConfig()
         overrides = {key: getattr(args, key) for key in ["warmup", "calibration_end", "calibration_fraction", "validation_start", "maxiter", "seed"] if getattr(args, key) is not None}
         config = replace(config, **overrides)
+        if args.command == "experiment":
+            selected = None if args.sensitivity == "none" else args.sensitivity
+            settings = {"trajectories": args.trajectories} if selected == "morris" else {"samples": args.samples} if selected == "sobol" else {}
+            study = run_experiment(basin, args.model, config, sensitivity=selected, sensitivity_options=settings, output=args.output, starts=args.starts)
+            print(json.dumps({"output": str(args.output), "model": study["fit"].model, "parameters": study["fit"].parameters, "validation_metrics": study["fit"].validation_metrics, "sensitivity": study["sensitivity"]}, indent=2, allow_nan=False))
+            return
         if args.command == "calibrate":
             if args.starts < 1:
                 raise ValueError("--starts must be a positive integer.")
