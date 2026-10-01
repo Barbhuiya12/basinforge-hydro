@@ -33,7 +33,7 @@ python -m pip install -e .
 basinforge models
 ```
 
-Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. See [Installation](installation.md) for the version 0.1.0 pip wheel, Octave and development setup.
+Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. Install the release with `pip install basinforge-hydro==0.1.0`; see [Installation](installation.md) for Octave and development setup.
 
 ## Basic example
 

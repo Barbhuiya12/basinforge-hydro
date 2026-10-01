@@ -37,7 +37,7 @@ Final development run: **145 tests passed in 44.22 seconds**, with the optional 
 
 Publishing checks subsequently passed 146 tests locally, including the site builder; GitHub's Python 3.11/3.13/3.14 jobs passed. The first Linux Octave run found one cross-runtime regression difference in MARRMOT_33, up to 2.96e-5 mm on the controlled fixture, rather than an interface failure. Its stored-reference comparison now uses an explicitly documented 1e-4 mm absolute envelope; the other 46 structures retain 1e-8 mm absolute / 1e-7 relative tolerances. Public discharge validation is unchanged: materially negative flows are rejected. The stored reference is not an exact floating-point oracle across all BLAS/Octave versions.
 
-`python -m build` generates a wheel/source archive including model MATLAB sources, the parameter manifest, worker wrapper and retained licenses. Not published to PyPI. No independent equivalence to airGR or the original HBV-light executable is claimed.
+`python -m build` generates a wheel/source archive including model MATLAB sources, the parameter manifest, worker wrapper and retained licenses. Version 0.1.0 is published on [PyPI](https://pypi.org/project/basinforge-hydro/0.1.0/). No independent equivalence to airGR or the original HBV-light executable is claimed.
 
 ## Optional MARRMoT verification
 

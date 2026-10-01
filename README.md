@@ -4,6 +4,7 @@ Lumped hydrological simulation, calibration and sensitivity analysis for single 
 
 [![Python tests](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/tests.yml/badge.svg)](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/tests.yml)
 [![Documentation](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/pages.yml/badge.svg)](https://barbhuiya12.github.io/basinforge-hydro/)
+[![PyPI](https://img.shields.io/pypi/v/basinforge-hydro)](https://pypi.org/project/basinforge-hydro/)
 
 [Documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Quick start](https://barbhuiya12.github.io/basinforge-hydro/quickstart.html) · [Case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) · [Release 0.1.0](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.1.0)
 
@@ -33,7 +34,7 @@ The 47 optional daily MARRMoT structures require Octave and its `optim` package.
 Requires Python 3.11 or later. Install the 0.1.0 release with pip:
 
 ```bash
-python -m pip install https://github.com/Barbhuiya12/basinforge-hydro/releases/download/v0.1.0/basinforge_hydro-0.1.0-py3-none-any.whl
+python -m pip install basinforge-hydro==0.1.0
 basinforge doctor
 ```
 
