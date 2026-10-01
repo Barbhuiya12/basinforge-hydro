@@ -2,7 +2,7 @@
 
 ## Time-series CSV
 
-```csv
+```text
 date,precipitation,pet,qobs,temperature
 ```
 
@@ -55,7 +55,7 @@ q_m3s = basin.to_m3s(q_mm)
 
 ## Multi-basin manifest
 
-```csv
+```text
 basin_id,path,area_km2,latitude,timestep,q_unit
 catchment-A,data/a.csv,1200,32,daily,m3/s
 catchment-B,data/b.csv,800,32,daily,m3/s

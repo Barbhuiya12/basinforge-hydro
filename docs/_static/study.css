@@ -1,0 +1,10 @@
+/* Keep the standard Read the Docs layout; constrain long scientific content. */
+.wy-nav-content { max-width: 960px; }
+.wy-table-responsive { overflow-x: auto; }
+.wy-table-responsive table td, .wy-table-responsive table th { white-space: normal; }
+.rst-content pre { overflow-x: auto; }
+.rst-content .sig { overflow-wrap: anywhere; }
+@media (max-width: 768px) {
+  .wy-nav-content { padding: 1.5em; }
+  .rst-content .highlight, .rst-content .math { overflow-x: auto; }
+}

@@ -1,4 +1,4 @@
-"""Optional Material documentation browser check (playwright + Chrome)."""
+"""Optional Read the Docs browser check (playwright + Chrome)."""
 import argparse
 import json
 from pathlib import Path
@@ -18,31 +18,29 @@ def main():
         page = browser.new_page(viewport={"width": 1440, "height": 1000})
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(base, wait_until="networkidle")
-        assert page.locator(".md-sidebar--primary").is_visible()
-        assert page.locator(".md-sidebar--secondary").is_visible()
-        assert "BasinForge for Hydrology" in page.locator("article h1").inner_text()
-        search = page.locator(".md-search__input")
+        assert page.locator(".wy-nav-side").is_visible()
+        assert page.locator(".wy-breadcrumbs").is_visible()
+        assert "Welcome to BasinForge" in page.locator(".rst-content h1").inner_text()
+        search = page.locator('.wy-side-nav-search input[name="q"]')
         search.fill("ABCD")
-        page.locator(".md-search-result__item").first.wait_for(state="visible")
-        assert "ABCD" in page.locator(".md-search-result").inner_text()
-        page.keyboard.press("Escape")
-        search.fill("")
-        page.keyboard.press("Escape")
+        search.press("Enter")
+        page.locator("#search-results li").first.wait_for(state="visible")
+        assert "ABCD" in page.locator("#search-results").inner_text()
         page.goto(base + "models/GR4J.html", wait_until="networkidle")
-        assert page.locator("article h1").inner_text().startswith("GR4J")
-        assert page.locator("article table tbody tr").count() >= 4
+        assert page.locator(".rst-content h1").inner_text().startswith("GR4J")
+        assert page.locator(".rst-content table tbody tr").count() >= 4
         page.goto(base, wait_until="networkidle")
         if args.screenshots:
             args.screenshots.mkdir(parents=True, exist_ok=True)
             page.screenshot(path=str(args.screenshots / "desktop.png"))
         page.set_viewport_size({"width": 390, "height": 844})
-        page.locator('.md-header label[for="__drawer"]').click()
-        assert page.locator("#__drawer").is_checked()
-        routes = ["", "installation.html", "calibration.html", "multi-basin.html", "models/ABCD.html", "study.html", "credits.html", "api.html"]
+        page.locator(".wy-nav-top .fa-bars").click()
+        assert "shift" in page.locator(".wy-nav-side").get_attribute("class")
+        routes = ["", "quickstart.html", "installation.html", "configuration.html", "calibration.html", "multi-basin.html", "models/ABCD.html", "study.html", "credits.html", "api.html"]
         for route in routes:
             page.goto(base + route, wait_until="networkidle")
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"Mobile overflow: {route}"
-            assert page.locator("article h1").count() == 1
+            assert page.locator(".rst-content h1").count() == 1
         page.goto(base, wait_until="networkidle")
         if args.screenshots:
             page.screenshot(path=str(args.screenshots / "mobile.png"))

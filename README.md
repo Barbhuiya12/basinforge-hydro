@@ -105,7 +105,7 @@ Use `if __name__ == "__main__":` around process-parallel application entry point
 
 `basins.csv` contains one row per basin, with time-series paths relative to the manifest:
 
-```csv
+```text
 basin_id,path,area_km2,latitude,timestep,q_unit
 Beas,data/beas.csv,1200,32,daily,m3/s
 Ravi,data/ravi.csv,800,32,daily,m3/s
@@ -181,7 +181,7 @@ Create a `Model` with `defaults`, `bounds`, `timestep`, `variant`, and `runner(b
 
 Primary sources: [LuMod documentation](https://zaul_ae.gitlab.io/lumod-docs/), [LuMod source](https://gitlab.com/Zaul_AE/lumod), [MARRMoT](https://github.com/wknoben/MARRMoT), [RavenPy model emulators](https://ravenpy.readthedocs.io/en/latest/notebooks/04_Emulating_hydrological_models.html), [hydromad](https://hydromad.github.io/reference/), [INRAE GR models](https://webgr.inrae.fr/eng/tools/hydrological-models), [SuperflexPy](https://superflexpy.readthedocs.io/en/latest/), [SciPy differential evolution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html).
 
-LuMod's model implementations are by **Saul Arciniega Esparza and collaborators**. BasinForge's workflow layer uses them as a dependency; it is not affiliated with or an official successor to LuMod. GPL-3.0-only; see [LICENSE](LICENSE). Model sources and their scientific references must be credited in research.
+LuMod's model implementations are by **Saul Arciniega Esparza and collaborators**. BasinForge incorporates their numerical kernels with retained attribution and license; LuMod remains a dependency for real-record examples and reference tests. BasinForge is not affiliated with or an official successor to LuMod. GPL-3.0-only; see [LICENSE](LICENSE). Model sources and their scientific references must be credited in research.
 
 Additional upstream projects: [hydromodel](https://github.com/OuyangWenyu/hydromodel), [SMARTpy](https://github.com/ThibHlln/smartpy), and [ABCD equations](https://abcd.walkerenvres.com/theory.html). Exact pinned revisions, retained licenses and modifications are in [THIRD_PARTY.md](THIRD_PARTY.md). Research-only families are explicitly separated from runnable adapters. See the [next additions and acceptance criteria](docs/ROADMAP.md).
 
@@ -193,4 +193,4 @@ uv pip install --python .venv/bin/python -e '.[docs]'
 .venv/bin/python -m http.server 8000 --directory _site
 ```
 
-Open `http://localhost:8000`. The site uses Material for MkDocs, with sidebar navigation, full-text search, a page table of contents, examples and a separate reference page for every registered model. Model parameters and API signatures are generated from the package, while study results and source credits come from maintained Markdown. Existing build directories are refused; use a new `--output` directory when rebuilding. GitHub Actions deploys the site from `main` through GitHub Pages.
+Open `http://localhost:8000`. The site uses Sphinx with the Read the Docs theme, following the study-friendly layout of NeuralHydrology: a collapsible sidebar, search, breadcrumbs, Quick Start, model reference, tutorials, configuration arguments and Python API documentation. Model parameters and API entries are generated from the package, while study results and source credits come from maintained Markdown. Existing build directories are refused; use a new `--output` directory when rebuilding. GitHub Actions deploys the site from `main` through GitHub Pages.

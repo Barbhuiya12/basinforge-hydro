@@ -8,7 +8,7 @@ import pytest
 
 
 def test_site_registry_results_links_and_no_overwrite(tmp_path):
-    pytest.importorskip("mkdocs", reason="Install .[docs] for site-builder tests")
+    pytest.importorskip("sphinx", reason="Install .[docs] for site-builder tests")
     root = Path(__file__).resolve().parents[1]
     spec = importlib.util.spec_from_file_location("build_site", root / "scripts/build_site.py")
     module = importlib.util.module_from_spec(spec)
@@ -20,8 +20,13 @@ def test_site_registry_results_links_and_no_overwrite(tmp_path):
     assert sum(model["backend"] == "octave" for model in data["models"]) == 47
     assert len(data["results"]) == 5
     assert data["results"][1]["validation_nse"] < 0  # poor result is not hidden
-    assert len(list((destination / "models").glob("*.html"))) == 62
-    assert (destination / "search/search_index.json").exists()
+    assert len(list((destination / "models").glob("*.html"))) == 64
+    assert (destination / "searchindex.js").exists()
+    home = (destination / "index.html").read_text()
+    assert "wy-nav-side" in home
+    assert "Quick Start" in home and "Tutorials" in home
+    assert "autofunction" not in (destination / "api.html").read_text()
+    assert "py function" in (destination / "api.html").read_text()
     class Links(HTMLParser):
         def handle_starttag(self, tag, attributes):
             for key, value in attributes:

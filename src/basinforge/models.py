@@ -1,7 +1,8 @@
 """Fast array adapters to pinned LuMod kernels; no equations are relabelled."""
 from dataclasses import dataclass
 from typing import Callable
-import warnings
+import json
+from pathlib import Path
 
 import numpy as np
 
@@ -57,48 +58,46 @@ class Model:
 
 
 def _gr4j(b, p):
-    from lumod.models.gr4j_model import _gr4j
+    from ._vendor.lumod.gr4j_model import _gr4j
     return _gr4j(b.precipitation, b.pet, *[p[k] for k in ["x1", "x2", "x3", "x4", "ps0", "rs0"]])[0]
 
 
 def _gr2m(b, p):
-    from lumod.models.gr2m_model import _gr2m
+    from ._vendor.lumod.gr2m_model import _gr2m
     return _gr2m(b.precipitation, b.pet, *[p[k] for k in ["s0", "r0", "x1", "x2"]])[0]
 
 
 def _gr1a(b, p):
-    from lumod.models.gr1a_model import _gr1a
+    from ._vendor.lumod.gr1a_model import _gr1a
     return _gr1a(b.precipitation, b.pet, p["x"])
 
 
 def _hymod(b, p):
-    from lumod.models.hymod_model import _hymod
+    from ._vendor.lumod.hymod_model import _hymod
     return _hymod(b.precipitation, b.pet, b.area_km2, *[p[k] for k in ["wmax", "w0", "wq0", "ws0", "alpha", "beta", "cexp", "nres", "ks", "kq", "kmax", "llet"]])[0] * 86.4 / b.area_km2
 
 
 def _hbv(b, p):
-    from lumod.models.hbv_model import _hbv_light
+    from ._vendor.lumod.hbv_model import _hbv_light
     return _hbv_light(b.precipitation, b.temperature, b.pet, b.area_km2, *[p[k] for k in ["maxbas", "tthres", "dd", "fc", "beta", "pwp", "k0", "k1", "k2", "kp", "lthres", "snow0", "s0", "w01", "w02"]])[0] * 86.4 / b.area_km2
 
 
 def _milc(b, p):
-    from lumod.models.milc_model import _milc
+    from ._vendor.lumod.milc_model import _milc
     return _milc(b.precipitation, b.pet, b.area_km2, *[p[k] for k in ["gamma", "w0", "wmax", "alpha", "m", "ks", "nu"]], .2)[0] * 86.4 / b.area_km2
 
 
 def _registry():
-    # LuMod imports install broad warning filters. Restore the caller's filters.
-    with warnings.catch_warnings():
-        from lumod import models
+    defaults = json.loads((Path(__file__).parent / "_vendor/lumod/defaults.json").read_text())
     definitions = [
-        ("GR4J", "daily", models.GR4J, _gr4j, {"x1": (100, 1500), "x2": (-5, 5), "x3": (10, 500), "x4": (.5, 10)}, "LuMod 0.1.3.0 GR4J", False),
-        ("GR2M", "monthly", models.GR2M, _gr2m, {"x1": (50, 2000), "x2": (.1, 2)}, "LuMod 0.1.3.0 GR2M", False),
-        ("GR1A", "annual", models.GR1A, _gr1a, {"x": (.1, 5)}, "LuMod 0.1.3.0 GR1A", False),
-        ("HYMOD", "daily", models.HYMOD, _hymod, {"wmax": (50, 2000), "alpha": (.01, .99), "beta": (.01, 1.99), "cexp": (.01, 1.99), "ks": (.001, .2), "kq": (.05, .95), "kmax": (.1, 1), "llet": (0, .95)}, "LuMod modified HYMOD2 (Roy et al. 2017), not classic five-parameter HYMOD", False),
-        ("HBV", "daily", models.HBV, _hbv, {"maxbas": (1.1, 7), "tthres": (-3, 5), "dd": (.1, 10), "fc": (50, 1500), "beta": (.1, 6), "pwp": (.1, 1), "k0": (.01, .9), "k1": (.001, .5), "k2": (.0001, .1), "kp": (.001, .2), "lthres": (0, 150)}, "LuMod modified HBV-light with temperature-index snow", True),
-        ("MILC", "daily", models.MILC, _milc, {"gamma": (.5, 15), "wmax": (50, 2000), "alpha": (.1, 5), "m": (1, 20), "ks": (1, 300), "nu": (.01, .99)}, "LuMod single-layer MISDc/MILC; upstream routing dt=0.2", False),
+        ("GR4J", "daily", defaults["GR4J"], _gr4j, {"x1": (100, 1500), "x2": (-5, 5), "x3": (10, 500), "x4": (.5, 10)}, "LuMod 0.1.3.0 GR4J", False),
+        ("GR2M", "monthly", defaults["GR2M"], _gr2m, {"x1": (50, 2000), "x2": (.1, 2)}, "LuMod 0.1.3.0 GR2M", False),
+        ("GR1A", "annual", defaults["GR1A"], _gr1a, {"x": (.1, 5)}, "LuMod 0.1.3.0 GR1A", False),
+        ("HYMOD", "daily", defaults["HYMOD"], _hymod, {"wmax": (50, 2000), "alpha": (.01, .99), "beta": (.01, 1.99), "cexp": (.01, 1.99), "ks": (.001, .2), "kq": (.05, .95), "kmax": (.1, 1), "llet": (0, .95)}, "LuMod modified HYMOD2 (Roy et al. 2017), not classic five-parameter HYMOD", False),
+        ("HBV", "daily", defaults["HBV"], _hbv, {"maxbas": (1.1, 7), "tthres": (-3, 5), "dd": (.1, 10), "fc": (50, 1500), "beta": (.1, 6), "pwp": (.1, 1), "k0": (.01, .9), "k1": (.001, .5), "k2": (.0001, .1), "kp": (.001, .2), "lthres": (0, 150)}, "LuMod modified HBV-light with temperature-index snow", True),
+        ("MILC", "daily", defaults["MILC"], _milc, {"gamma": (.5, 15), "wmax": (50, 2000), "alpha": (.1, 5), "m": (1, 20), "ks": (1, 300), "nu": (.01, .99)}, "LuMod single-layer MISDc/MILC; upstream routing dt=0.2", False),
     ]
-    registry = {name: Model(name, step, dict(cls().params), bounds, runner, variant, temp) for name, step, cls, runner, bounds, variant, temp in definitions}
+    registry = {name: Model(name, step, dict(cls), bounds, runner, variant, temp) for name, step, cls, runner, bounds, variant, temp in definitions}
     from .extended_models import extended_registry
     registry.update(extended_registry())
     from .marrmot import marrmot_registry

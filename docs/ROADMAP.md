@@ -2,6 +2,21 @@
 
 Implemented in 0.2: 14 Python models, 47 optional MARRMoT structures, shared/independent multi-basin calibration, completed-job reuse, chronological validation, deterministic multi-start selection, parameter-scenario ensembles, HTML hydrograph/flow-duration reports and Octave diagnostics.
 
+## Resumed enhancement work
+
+The documentation now uses Sphinx and the Read the Docs theme, with Quick Start, model pages, tutorials, configuration and generated API entries. LuMod numerical kernels and SMARTpy step functions are incorporated locally with retained attribution and cached compilation; reference parity tests remain in place.
+
+Still incomplete from the requested enhancement:
+
+- Fully remove the LuMod/SMARTpy runtime dependencies after replacing example-data loaders and separating independent reference tests.
+- Add a single high-level experiment call combining fitting, sensitivity analysis and report exports.
+- Implement and verify Morris/Sobol sensitivity analysis with explicit objective, sampling budget and training-only evaluation.
+- Document each model's exact equations, parameter units, initial states and routing, checking the implemented variant rather than substituting generic family equations.
+- Port and independently verify the 47 optional Octave structures before calling them Python-only. They still require Octave today.
+- Verify isolated pip installations and set up an authorized PyPI release. Source installation is available; the package is not yet published to PyPI.
+
+The documentation redesign does not by itself complete these scientific or packaging changes.
+
 ## Highest-value scientific improvements
 
 1. Original-engine adapters for AWBM, SAC-SMA, IHACRES and WAPABA. Their MARRMoT relatives are not substitutes for original-model parity. Evaluate [hydromad](https://hydromad.github.io/reference/) and [CSIRO PyGME](https://github.com/csiro-hydroinformatics/pygme), including compiled/runtime dependencies, routing components and license notices.

@@ -1,11 +1,14 @@
-# BasinForge for Hydrology
+# Welcome to BasinForge’s documentation!
 
 BasinForge is an open-source Python package for running and calibrating lumped hydrological models for **one basin or multiple basins**. These pages are intended for teaching, study and reproducible research.
 
 The package provides 14 Python model implementations and 47 optional MARRMoT structures through Octave. Model names, variants, time steps and parameter bounds are documented separately.
 
-!!! note "Scope"
-    These are 61 selectable implementations/structures, not 61 distinct original model families or every published lumped model. MARRMoT structures resemble, but are not identical to, their original namesakes.
+Start with the [Quick Start](quickstart.md), browse the [model reference](models/index.md), follow the [tutorials](tutorials.md), or inspect the [Python API](api.md). Source code is available on [GitHub](https://github.com/Barbhuiya12/basinforge-hydro).
+
+:::{note}
+These are 61 selectable implementations/structures, not 61 distinct original model families or every published lumped model. MARRMoT structures resemble, but are not identical to, their original namesakes.
+:::
 
 ## Key features
 

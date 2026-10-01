@@ -43,7 +43,7 @@ def _xaj_mz(b, p):
 def _smart(b, p):
     # Force the documented Python implementation, not an unpinned smartcpp
     # extension that happens to be installed on the caller's machine.
-    from smartpy.structure import run_one_step_catchment, run_one_step_river
+    from ._vendor.smartpy.structure import run_one_step_catchment, run_one_step_river
     area = b.area_km2 * 1e6
     states = np.zeros(12)
     states[5:11] = p["Z"] / 12 / 1000 * area
