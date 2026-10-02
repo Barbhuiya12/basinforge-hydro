@@ -67,7 +67,20 @@ def run_experiment(
             if starts > 1:
                 with (stage / "multistart.json").open("x", encoding="utf-8") as stream:
                     json.dump({"seeds": list(seed_values), "losses": [trial.objective_loss for trial in trials], "selected_by": "minimum calibration objective loss"}, stream, indent=2, allow_nan=False)
-            export_report(basin, fit, stage / "report")
+            export_report(basin, fit, stage / "report", model=model)
+            from .models import get_model
+            resolved_model = get_model(model)
+            if hasattr(resolved_model.runner, "accounting"):
+                accounting = resolved_model.runner.accounting(basin, fit.parameters)
+                accounting.daily.to_csv(stage / "water-balance.csv")
+                # Long-format export retains user names without using them as paths.
+                import pandas as pd
+                if accounting.sectors:
+                    pd.concat(accounting.sectors, names=["sector", "date"]).to_csv(stage / "water-sectors.csv")
+                else:
+                    pd.DataFrame(columns=["sector", "date"]).to_csv(stage / "water-sectors.csv", index=False)
+                with (stage / "water-summary.json").open("x", encoding="utf-8") as stream:
+                    json.dump(accounting.summary(), stream, indent=2, allow_nan=False)
             if sensitivity_result is not None:
                 with (stage / "sensitivity.json").open("x", encoding="utf-8") as stream:
                     json.dump(sensitivity_result, stream, indent=2, allow_nan=False)

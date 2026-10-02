@@ -83,6 +83,8 @@ def fingerprint(basin, model, config):
     from dataclasses import asdict
     digest = hashlib.sha256(json.dumps({"basin_id": basin.basin_id, "area": basin.area_km2, "latitude": basin.latitude, "timestep": basin.timestep, "model": model.name, "variant": model.variant, "defaults": model.defaults, "config": asdict(config)}, sort_keys=True, allow_nan=False).encode())
     digest.update(basin.dates.asi8.tobytes())
+    if hasattr(model.runner, "fingerprint"):
+        digest.update(model.runner.fingerprint().encode())
     for values in [basin.precipitation, basin.pet, basin.qobs, basin.temperature]:
         digest.update(b"None" if values is None else values.tobytes())
     return digest.hexdigest()

@@ -6,7 +6,7 @@ Lumped hydrological simulation, calibration and sensitivity analysis for single 
 [![Documentation](https://github.com/Barbhuiya12/basinforge-hydro/actions/workflows/pages.yml/badge.svg)](https://barbhuiya12.github.io/basinforge-hydro/)
 [![PyPI](https://img.shields.io/pypi/v/basinforge-hydro)](https://pypi.org/project/basinforge-hydro/)
 
-[Documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Quick start](https://barbhuiya12.github.io/basinforge-hydro/quickstart.html) · [Case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) · [Release 0.1.0](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.1.0)
+[Documentation](https://barbhuiya12.github.io/basinforge-hydro/) · [Quick start](https://barbhuiya12.github.io/basinforge-hydro/quickstart.html) · [Case study](https://barbhuiya12.github.io/basinforge-hydro/case-study.html) · [Release 0.2.0](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.2.0)
 
 ![Observed flow and calibrated GR4J simulations from the LuMod example 2 case study](https://raw.githubusercontent.com/Barbhuiya12/basinforge-hydro/main/docs/site/case-study-results/example-2-validation.png)
 
@@ -20,6 +20,7 @@ Lumped hydrological simulation, calibration and sensitivity analysis for single 
 - Chronological calibration and validation with NSE, KGE, RMSE and log NSE.
 - Morris and Sobol sensitivity analysis.
 - Saved parameters, simulations, hydrographs and HTML reports.
+- Daily surface/groundwater withdrawals, delayed returns and priority/LP allocation.
 
 | Time step | Python models |
 | --- | --- |
@@ -31,10 +32,10 @@ The 47 optional daily MARRMoT structures require Octave and its `optim` package.
 
 ## Install
 
-Requires Python 3.11 or later. Install the 0.1.0 release with pip:
+Requires Python 3.11 or later. Install the 0.2.0 release with pip:
 
 ```bash
-python -m pip install basinforge-hydro==0.1.0
+python -m pip install basinforge-hydro==0.2.0
 basinforge doctor
 ```
 
@@ -45,6 +46,8 @@ git clone https://github.com/Barbhuiya12/basinforge-hydro.git
 cd basinforge-hydro
 python -m pip install -e .
 ```
+
+The native [water-use module](https://barbhuiya12.github.io/basinforge-hydro/water-use.html) includes equations, single/connected-basin accounting and calibration examples.
 
 ## Try the example data
 

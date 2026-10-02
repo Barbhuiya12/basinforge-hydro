@@ -1,0 +1,187 @@
+{
+  "morris": {
+    "method": "morris",
+    "model": "GR4J_MANAGED",
+    "variant": "LuMod 0.1.3.0 GR4J; BasinForge conceptual managed-water layer",
+    "objective": "nse",
+    "score_period": "training data after warmup only",
+    "training_steps": 1935,
+    "seed": 42,
+    "levels": 4,
+    "trajectories": 8,
+    "evaluations": 40,
+    "parameters": [
+      {
+        "parameter": "wu_baseflow_fraction",
+        "bounds": [
+          0.1,
+          0.3
+        ],
+        "mu": 0.011157023030545533,
+        "mu_star": 0.01283875734774994,
+        "sigma": 0.00993963584052799,
+        "effects": [
+          0.02152377801423072,
+          0.015248841290568083,
+          0.016362623844982216,
+          -0.0035537219681051613,
+          0.01039953495830237,
+          0.010454590671914121,
+          -0.003173215300712462,
+          0.02199375273318438
+        ]
+      },
+      {
+        "parameter": "wu_groundwater_recession",
+        "bounds": [
+          0.01,
+          0.1
+        ],
+        "mu": 0.005948009243014293,
+        "mu_star": 0.005948009243014293,
+        "sigma": 0.0034824174421994704,
+        "effects": [
+          0.013386030434299812,
+          0.00611726247300054,
+          0.005772513731213513,
+          0.004739616880898634,
+          0.006276462413321748,
+          0.0008089485255636242,
+          0.004726351257387795,
+          0.00575688822842868
+        ]
+      },
+      {
+        "parameter": "wu_demand_scale",
+        "bounds": [
+          0.5,
+          1.5
+        ],
+        "mu": 0.0025100437783668675,
+        "mu_star": 0.0025100437783668675,
+        "sigma": 0.0012391059347691327,
+        "effects": [
+          0.0019221999446099036,
+          0.0018269497492143794,
+          0.0041530415015813005,
+          0.004724399371171806,
+          0.0014791540964013694,
+          0.0014791540964013694,
+          0.0024342813579704137,
+          0.002061170109584398
+        ]
+      },
+      {
+        "parameter": "wu_consumption_scale",
+        "bounds": [
+          0.5,
+          1.0
+        ],
+        "mu": 0.002329101029698806,
+        "mu_star": 0.002329101029698806,
+        "sigma": 0.0010218011683904914,
+        "effects": [
+          0.0006405483312066362,
+          0.0031416941400351783,
+          0.002386386790714068,
+          0.003114166283229469,
+          0.0030472389956968104,
+          0.0031022947093085618,
+          0.0023078367036604153,
+          0.0008926422837393089
+        ]
+      }
+    ],
+    "interpretation": "Normalized Morris effects on the minimized training objective. mu_star ranks influence within the reported bounds; sigma indicates effect variability, including possible interaction and nonlinearity."
+  },
+  "sobol": {
+    "method": "sobol_jansen",
+    "model": "GR4J_MANAGED",
+    "variant": "LuMod 0.1.3.0 GR4J; BasinForge conceptual managed-water layer",
+    "objective": "nse",
+    "score_period": "training data after warmup only",
+    "seed": 42,
+    "base_samples": 64,
+    "bootstrap_replicates": 50,
+    "evaluations": 384,
+    "parameters": [
+      {
+        "parameter": "wu_baseflow_fraction",
+        "bounds": [
+          0.1,
+          0.3
+        ],
+        "first_order": 0.5187551069128638,
+        "first_order_ci95": [
+          0.31211512727820645,
+          0.6444509574395172
+        ],
+        "total_order": 0.47371777941592685,
+        "total_order_ci95": [
+          0.3128939391789899,
+          0.6100166110520077
+        ],
+        "first_order_estimator": "1 - mean((f(B) - f(A_Bi))^2) / (2 Var(Y))",
+        "total_order_estimator": "mean((f(A) - f(A_Bi))^2) / (2 Var(Y))"
+      },
+      {
+        "parameter": "wu_groundwater_recession",
+        "bounds": [
+          0.01,
+          0.1
+        ],
+        "first_order": 0.4580569463519244,
+        "first_order_ci95": [
+          0.32865801616062074,
+          0.6121995326159431
+        ],
+        "total_order": 0.4389723237935868,
+        "total_order_ci95": [
+          0.3172184158963748,
+          0.6394772090176398
+        ],
+        "first_order_estimator": "1 - mean((f(B) - f(A_Bi))^2) / (2 Var(Y))",
+        "total_order_estimator": "mean((f(A) - f(A_Bi))^2) / (2 Var(Y))"
+      },
+      {
+        "parameter": "wu_demand_scale",
+        "bounds": [
+          0.5,
+          1.5
+        ],
+        "first_order": 0.07710795961417982,
+        "first_order_ci95": [
+          -0.24365905424274495,
+          0.32327014024075174
+        ],
+        "total_order": 0.04672029504625307,
+        "total_order_ci95": [
+          0.02916339850581352,
+          0.07071098839840644
+        ],
+        "first_order_estimator": "1 - mean((f(B) - f(A_Bi))^2) / (2 Var(Y))",
+        "total_order_estimator": "mean((f(A) - f(A_Bi))^2) / (2 Var(Y))"
+      },
+      {
+        "parameter": "wu_consumption_scale",
+        "bounds": [
+          0.5,
+          1.0
+        ],
+        "first_order": 0.04107857725765085,
+        "first_order_ci95": [
+          -0.2926939095126685,
+          0.3276025686513298
+        ],
+        "total_order": 0.01894064890070636,
+        "total_order_ci95": [
+          0.011814187729041001,
+          0.02733129369522831
+        ],
+        "first_order_estimator": "1 - mean((f(B) - f(A_Bi))^2) / (2 Var(Y))",
+        "total_order_estimator": "mean((f(A) - f(A_Bi))^2) / (2 Var(Y))"
+      }
+    ],
+    "interpretation": "Variance-based global effects over the reported independent parameter bounds. Finite-sample first-order estimates may be negative or sum above one. Bootstrap intervals describe index sampling variability, not predictive uncertainty."
+  }
+}

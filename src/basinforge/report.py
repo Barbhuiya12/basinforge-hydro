@@ -10,10 +10,10 @@ from .calibration import CalibrationConfig, fingerprint
 from .models import get_model
 
 
-def export_report(basin, fit, directory):
+def export_report(basin, fit, directory, *, model=None):
     """Create a static HTML/PNG report; never overwrite an existing directory."""
     config = CalibrationConfig(**fit.config)
-    if fingerprint(basin, get_model(fit.model), config) != fit.fingerprint:
+    if fingerprint(basin, get_model(model if model is not None else fit.model), config) != fit.fingerprint:
         raise ValueError("Basin/model/config does not match the fitted result.")
     directory = Path(directory)
     if directory.exists():

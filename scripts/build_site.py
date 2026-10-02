@@ -140,7 +140,7 @@ def build(output):
             (octave_nav if model["backend"] == "octave" else python_nav).append({name: "models/" + name + ".md"})
         (model_dir / "index.md").write_text("\n".join(table))
         api = ["# API reference", "", "These entries are generated from the installed Python package. See the tutorials for complete workflows and required units.", ""]
-        for name in ["Basin", "Model", "CalibrationConfig", "calibrate", "calibrate_many", "calibrate_shared", "compare_models", "calibrate_multistart", "run_experiment", "morris_sensitivity", "sobol_sensitivity", "simulate_ensemble", "export_report", "get_model", "list_models", "configure_marrmot", "check_marrmot", "marrmot_details", "close_marrmot"]:
+        for name in ["Basin", "Model", "CalibrationConfig", "calibrate", "calibrate_many", "calibrate_shared", "compare_models", "calibrate_multistart", "run_experiment", "morris_sensitivity", "sobol_sensitivity", "simulate_ensemble", "export_report", "get_model", "list_models", "WaterDemand", "WaterUseConfig", "WaterUseResult", "WaterUseScenario", "simulate_water_use", "irrigation_demand", "domestic_demand", "managed_model", "managed_accounting", "run_water_network", "configure_marrmot", "check_marrmot", "marrmot_details", "close_marrmot"]:
             obj = getattr(basinforge, name)
             directive = "autoclass" if inspect.isclass(obj) else "autofunction"
             api += ["## " + name, "", "```{eval-rst}", ".. " + directive + ":: basinforge." + name]
@@ -153,7 +153,7 @@ def build(output):
             return "\n\n```{toctree}\n" + options + "\n" + "\n".join(entries) + "\n```\n"
         for filename, entries in {
             "quickstart.md": ["installation", "data", "calibration"],
-            "tutorials.md": ["multi-basin", "examples", "case-study"],
+            "tutorials.md": ["multi-basin", "examples", "case-study", "water-use"],
             "models/index.md": ["python", "marrmot"],
         }.items():
             with (source / filename).open("a") as stream:
@@ -169,6 +169,7 @@ def build(output):
             raise RuntimeError("Sphinx documentation failed; fix warnings before publishing.")
     (output / "data.json").write_text(json.dumps({"version": __version__, "models": models, "results": results}, indent=2, allow_nan=False))
     shutil.copytree(ROOT / "docs/site/case-study-results", output / "case-study-results", dirs_exist_ok=True)
+    shutil.copytree(ROOT / "docs/site/water-use-results", output / "water-use-results", dirs_exist_ok=True)
     (output / ".nojekyll").touch()
     print(f"Built Read the Docs documentation: {len(models)} model pages, guides, search and study results at {output}")
 

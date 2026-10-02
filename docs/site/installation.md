@@ -5,7 +5,7 @@
 Python 3.11 or later is required. Install from [PyPI](https://pypi.org/project/basinforge-hydro/):
 
 ```bash
-python -m pip install basinforge-hydro==0.1.0
+python -m pip install basinforge-hydro==0.2.0
 basinforge doctor
 ```
 
@@ -21,7 +21,7 @@ basinforge doctor
 basinforge models
 ```
 
-On Windows, replace activation with `.venv\Scripts\activate`. Wheels and source archives are also available from [GitHub Releases](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.1.0).
+On Windows, replace activation with `.venv\Scripts\activate`. Wheels and source archives are also available from [GitHub Releases](https://github.com/Barbhuiya12/basinforge-hydro/releases/tag/v0.2.0).
 
 The Python install supplies the 14 Python model implementations without installing LuMod or SMARTpy as runtime packages. First calls to Numba-backed kernels may be slower while compiling. Optional independent upstream parity tests use `python -m pip install -e '.[dev,reference]'`.
 

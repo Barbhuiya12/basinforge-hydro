@@ -1,0 +1,99 @@
+{
+  "dataset": "LuMod example 2",
+  "water_use": "Assumed scenario, not observed withdrawals",
+  "assumptions": {
+    "population": 10000,
+    "irrigated_area_fraction": 0.05,
+    "irrigation_groundwater_demand_fraction": 0.4,
+    "industrial_m3_day": 500,
+    "groundwater_initial_mm": 10,
+    "baseflow_fraction": 0.2,
+    "groundwater_recession_day": 0.03,
+    "environmental_m3_day": 2000,
+    "pumping_capacity_m3_day": 20000
+  },
+  "calibration": {
+    "warmup": 365,
+    "training_fraction": 0.7,
+    "maxiter": 10,
+    "popsize": 5,
+    "lhs_samples": 100,
+    "seed": 42,
+    "multistart_seeds": [
+      42,
+      43
+    ]
+  },
+  "priority": {
+    "units": "m3",
+    "maximum_daily_balance_error": 1.862645149230957e-09,
+    "river_outflow": 2321654972.706126,
+    "consumed": 19808953.43763881,
+    "unmet_demand": 0.0,
+    "final_storage_including_pending_returns": 7476998.563099573
+  },
+  "lp_first_year": {
+    "units": "m3",
+    "maximum_daily_balance_error": 1.862645149230957e-09,
+    "river_outflow": 314828444.3183495,
+    "consumed": 2235072.939242029,
+    "unmet_demand": 9.868017514236271e-11,
+    "final_storage_including_pending_returns": 5759121.055010585
+  },
+  "network_balance_error_m3": -1.4156103134155273e-07,
+  "network_final_transit_m3": {
+    "upstream": 163128.4088134766
+  },
+  "timing": {
+    "priority_days": 3287,
+    "priority_seconds": 0.0007875409792177379,
+    "lp_days": 365,
+    "lp_seconds": 0.6591232500504702,
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "note": "Single local run; priority compiled kernel was warmed by calibration. LP uses Python/HiGHS; differing time spans are reported explicitly."
+  },
+  "fits": {
+    "de": {
+      "calibration": {
+        "nse": 0.7049506879204378,
+        "kge": 0.7741982334562924,
+        "rmse": 3.682517810052396,
+        "log_nse": 0.686288596193592
+      },
+      "validation": {
+        "nse": 0.6171828698503026,
+        "kge": 0.7420668284851847,
+        "rmse": 4.41506049523672,
+        "log_nse": 0.642445463077411
+      }
+    },
+    "lhs": {
+      "calibration": {
+        "nse": 0.6296047474981221,
+        "kge": 0.7319232929980078,
+        "rmse": 4.126009831653437,
+        "log_nse": 0.3491643291684584
+      },
+      "validation": {
+        "nse": 0.5590092219726138,
+        "kge": 0.744753620296289,
+        "rmse": 4.7386619836984885,
+        "log_nse": 0.577807962933925
+      }
+    },
+    "multistart": {
+      "calibration": {
+        "nse": 0.7148513317211532,
+        "kge": 0.7728987779857813,
+        "rmse": 3.62020552264157,
+        "log_nse": 0.7421827946264494
+      },
+      "validation": {
+        "nse": 0.6034498074636756,
+        "kge": 0.7183956431934161,
+        "rmse": 4.49355497825275,
+        "log_nse": 0.6102253830828521
+      }
+    }
+  }
+}

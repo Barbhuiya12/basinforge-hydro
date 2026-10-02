@@ -20,6 +20,7 @@ These are 61 selectable implementations/structures, not 61 distinct original mod
 - Chronological training/validation with continuous model history.
 - NSE, KGE (2009), RMSE and explicitly defined log NSE.
 - Saved parameters, simulations, hydrograph/flow-duration reports and scenario ensembles.
+- Native daily withdrawals, conceptual groundwater, return flows and priority/LP allocation.
 - Model source attribution, reference tests and stated scientific limitations.
 
 ## Quick installation
@@ -33,7 +34,7 @@ python -m pip install -e .
 basinforge models
 ```
 
-Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. Install the release with `pip install basinforge-hydro==0.1.0`; see [Installation](installation.md) for Octave and development setup.
+Windows activation: `.venv\Scripts\activate`. Python 3.11 or later is required. Install the release with `pip install basinforge-hydro==0.2.0`; see [Installation](installation.md) for Octave and development setup.
 
 ## Basic example
 
@@ -65,6 +66,7 @@ The file and basin area above illustrate the API; supply your catchment data and
 | Choose a model | [Models](models/index.md) |
 | Fit a single basin | [Calibration](calibration.md) |
 | Fit several basins | [Multi-basin workflows](multi-basin.md) |
+| Account for withdrawals and returns | [Water-use guide](water-use.md) |
 | Analyze global parameter sensitivity | [Sensitivity guide](calibration.md#sensitivity-analysis) |
 | Review model equations | [Equation reference](equations.md) |
 | Understand the measured results | [Verification study](study.md) |
